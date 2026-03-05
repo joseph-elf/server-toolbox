@@ -2,8 +2,11 @@
 set -e
 set -o pipefail
 
-source "$(dirname "$0")/utils.sh"
 
+TOOLBOX_FOLD="${TOOLBOX_FOLD:-$( [ -d "$HOME/server-toolbox" ] && echo "$HOME/server-toolbox" || pwd )}"
+echo "The toolbox loaded is located in $TOOLBOX_FOLD."
+source "$TOOLBOX_FOLD/utils.sh"
+#source "$(dirname "$0")/utils.sh"
 
 
 CONFIG_FILE=${1:-config-server.sh}
@@ -13,6 +16,7 @@ if [[ ! -f "./$CONFIG_FILE" ]]; then
     echo "❌ Error: $CONFIG_FILE not found in the current directory!"
     exit 1
 fi
+
 
 
 echo

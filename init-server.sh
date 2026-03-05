@@ -2,7 +2,9 @@
 
 set -e
 set -o pipefail
-source "$(dirname "$0")/utils.sh"
+
+TOOLBOX_FOLD="${TOOLBOX_FOLD:-$( [ -d "$HOME/server-toolbox" ] && echo "$HOME/server-toolbox" || pwd )}"
+source "$TOOLBOX_FOLD/utils.sh"
 
 CONFIG_FILE=${1:-"config-server.sh"}
 
@@ -42,6 +44,8 @@ git clone $GIT_HUB_servertoolbox;
 echo -e 'Add the server-toolbox repository to the PATH and\nmake .sh executable.'
 grep -qxF 'export PATH=\"\$HOME/server-toolbox:\$PATH\"' ~/.bashrc || \
 echo 'export PATH=\"\$HOME/server-toolbox:\$PATH\"' >> ~/.bashrc
+grep -qxF 'export TOOLBOX_HOME=\"\$HOME/server-toolbox\"' ~/.bashrc || \
+echo 'export TOOLBOX_HOME=\"\$HOME/server-toolbox\"' >> ~/.bashrc
 source ~/.bashrc;
 chmod +x \$HOME/server-toolbox/*.sh
 echo '#################################################'

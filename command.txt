@@ -1,2 +1,14 @@
 chmod +x *.sh
     -o StrictHostKeyChecking=accept-new\
+
+
+
+/usr/bin/grep -qxF 'export PATH="$HOME/Desktop/Projects/server-toolbox:$PATH"' ~/.zshrc || \
+echo 'export PATH="$HOME/Desktop/Projects/server-toolbox:$PATH"' >> ~/.zshrc
+/usr/bin/grep -qxF 'export TOOLBOX_HOME="$HOME/Desktop/Projects/server-toolbox"' ~/.zshrc || \
+echo 'export TOOLBOX_HOME="$HOME/Desktop/Projects/server-toolbox"' >> ~/.zshrc
+source ~/.zshrc;
+
+
+
+

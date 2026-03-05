@@ -2,8 +2,9 @@
 
 set -e
 set -o pipefail
-source "$(dirname "$0")/utils.sh"
 
+TOOLBOX_FOLD="${TOOLBOX_FOLD:-$( [ -d "$HOME/server-toolbox" ] && echo "$HOME/server-toolbox" || pwd )}"
+source "$TOOLBOX_FOLD/utils.sh"
 
 # Check the config requirements
 CONFIG_FILE=${1:-"config-server.sh"}
@@ -24,7 +25,6 @@ LOG_FILE="$HOME/tmp/setup-python.log"
 # Install PYTHON
 
 INSTALL_LIST=()
-
 # Python interpreter
 if ! command -v python${PYTHON_VERSION} >/dev/null 2>&1; then
     INSTALL_LIST+=("python${PYTHON_VERSION}")

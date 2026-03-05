@@ -2,9 +2,14 @@
 
 set -e
 set -o pipefail
-source "$(dirname "$0")/utils.sh"
+
+TOOLBOX_FOLD="${TOOLBOX_FOLD:-$( [ -d "$HOME/server-toolbox" ] && echo "$HOME/server-toolbox" || pwd )}"
+source "$TOOLBOX_FOLD/utils.sh"
 
 CONFIG_FILE=${1:-"config-server.sh"}
+
+
+
 
 load_config_and_check -c "$CONFIG_FILE" -vr IP USERNAME SSH_KEY
 
