@@ -1,3 +1,19 @@
+# SERVER-TOOLBOX
+## Presentation of the tool
+This small repository contain a set of tool very practical to setup a remote server like VPS, aws EC2, Google Cloud Engine, etc for your developpment project.
+I usually use it to initialize EC2 instances and send and execute some heavy code. I also use it to set up my personnal server running some API use on my personnal website
+
+
+## Installation
+Simply git clone this repository.
+```git clone repo```
+ We recommand to add the repository to your ```PATH``` variable 
+``` PATH```
+and to make all bash command executable with
+```chmod +x repo/*.sh```.
+You can now run the following bash commands :
+
+
 ### utils.sh
 This contain several utilitary function to open and checks configs:
 - ``` print_variable name```
@@ -14,10 +30,21 @@ load a config file containing variable definition and check the list of variable
     - ```-vr``` : flag to pass to ```check_variable```
     - ```IP HOST ...``` : list of variables to check
 
+
+
 ### init-server.sh
 - ```init-server.sh config.sh```
 Reads ```IP```, ```USERNAME```, ```SSH_KEY```, ```GIT_HUB_servertoolbox``` and ```GIT_HUB_repos``` from ```config.sh``` or ```config-server.sh``` by default. Then connects by ```ssh``` to the server and run some initialisation commands:
-    - dji
+    - clone the repository ```GIT_HUB_servertoolbox``` containing this toolbox, add it to the ```PATH``` and make ```*.sh``` executable
+    - clone all repositories in ```GIT_HUB_repos```
+
+
+
 ### connect-server.sh
 - ```connect-server.sh config.sh```
 Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```config-server.sh``` by default, and connects by ```ssh``` to the server.
+
+
+
+## Troubleshooting
+If you face problems, have recommandations, or just want to discuss, you can contact me via jelforzli.webapp@gmail.com ;) !
