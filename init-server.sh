@@ -11,6 +11,24 @@ load_config_and_check -c "$CONFIG_FILE" -vr IP USERNAME SSH_KEY GIT_HUB_serverto
 load_config_and_check -c "$CONFIG_FILE" -v GIT_HUB_repos
 
 
+# Send the config file to the root of the server
+echo
+echo '#################################################'
+echo "🚀 Send $CONFIG_FILE to the server"
+
+scp -i "$SSH_KEY" \
+    -o StrictHostKeyChecking=no \
+    -C \
+    -q \
+    $CONFIG_FILE \
+    "$USERNAME@$IP:~/$CONFIG_FILE"
+
+echo '#################################################'
+echo
+
+
+
+
 
 REMOTE_COMMANDS="
 run-parts /etc/update-motd.d/
@@ -67,8 +85,6 @@ REMOTE_COMMANDS+=$GIT_COMMANDS
 REMOTE_COMMANDS+="
 exec bash
 "
-
-
 
 ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -t "$USERNAME@$IP" "$REMOTE_COMMANDS"
 

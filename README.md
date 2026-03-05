@@ -34,7 +34,10 @@ load a config file containing variable definition and check the list of variable
 
 ### init-server.sh
 - ```init-server.sh config.sh```
-Reads ```IP```, ```USERNAME```, ```SSH_KEY```, ```GIT_HUB_servertoolbox``` and ```GIT_HUB_repos``` from ```config.sh``` or ```config-server.sh``` by default. Then connects by ```ssh``` to the server and run some initialisation commands:
+
+Reads ```IP```, ```USERNAME```, ```SSH_KEY```, ```GIT_HUB_servertoolbox``` and ```GIT_HUB_repos``` from ```config.sh``` or ```config-server.sh``` by default. 
+Send the config file to the server using ```scp```.
+Then connects by ```ssh``` to the server and run some initialisation commands:
     - clone the repository ```GIT_HUB_servertoolbox``` containing this toolbox, add it to the ```PATH``` and make ```*.sh``` executable
     - clone all repositories in ```GIT_HUB_repos```
 
@@ -42,6 +45,7 @@ Reads ```IP```, ```USERNAME```, ```SSH_KEY```, ```GIT_HUB_servertoolbox``` and `
 
 ### connect-server.sh
 - ```connect-server.sh config.sh```
+
 Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```config-server.sh``` by default, and connects by ```ssh``` to the server.
 
 
