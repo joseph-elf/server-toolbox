@@ -63,12 +63,14 @@ fi
 # Install missing packages 
 if [[ ${#INSTALL_LIST[@]} -gt 0 ]]; then
     echo "🔧 Reconciling runtime dependencies..."
-
+    
+    echo "Running: sudo apt update" >> "$LOG_FILE"
     sudo apt update >>"$LOG_FILE" 2>&1 || {
         echo "❌ apt update failed"
         exit 1
     }
 
+    echo "Running: sudo apt install -y ${INSTALL_LIST[@]}" >> "$LOG_FILE"
     sudo apt install -y "${INSTALL_LIST[@]}" >>"$LOG_FILE" 2>&1 || {
         echo "❌ apt install failed"
         exit 1
@@ -123,6 +125,7 @@ python3 -m venv "$VENV_PATH"
 source "$VENV_PATH/bin/activate"
 
 echo "Upgrading pip..."
+echo "Running: pip install --upgrade pip" >> "$LOG_FILE"
 if ! pip install --upgrade pip >>"$LOG_FILE" 2>&1; then
     echo "❌ Pip upgrade failed"
     exit 1

@@ -28,7 +28,6 @@ check_variable -rv USERNAME
 check_variable -rv SSH_KEY
 check_variable -v GIT_HUB_repos
 
-echo "✅ Opening $CONFIG_FILE is done."
 
 
 

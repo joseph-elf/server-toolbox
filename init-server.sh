@@ -41,13 +41,6 @@ echo
 echo '#################################################'
 echo '🚀 Download SERVER-TOOLBOX and make it executable'
 git clone $GIT_HUB_servertoolbox;
-echo -e 'Add the server-toolbox repository to the PATH and\nmake .sh executable.'
-grep -qxF 'export PATH=\"\$HOME/server-toolbox:\$PATH\"' ~/.bashrc || \
-echo 'export PATH=\"\$HOME/server-toolbox:\$PATH\"' >> ~/.bashrc
-grep -qxF 'export TOOLBOX_HOME=\"\$HOME/server-toolbox\"' ~/.bashrc || \
-echo 'export TOOLBOX_HOME=\"\$HOME/server-toolbox\"' >> ~/.bashrc
-source ~/.bashrc;
-chmod +x \$HOME/server-toolbox/*.sh
 echo '#################################################'
 echo
 "
