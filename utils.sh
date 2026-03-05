@@ -142,7 +142,7 @@ load_config_and_check() {
         esac
     done
 
-    echo "🚀 Opening $config_file :"
+    echo "🚀 Reading $config_file..."
     source "./$config_file" || {
         echo "❌ Config load failed" >&2
         exit 1
@@ -151,5 +151,4 @@ load_config_and_check() {
     for v in "${vars[@]}"; do
         check_variable "$flags" "$v"
     done
-    echo "✅ Opening $config_file is done."
 }

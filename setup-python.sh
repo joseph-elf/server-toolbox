@@ -4,67 +4,95 @@ set -e
 set -o pipefail
 source "$(dirname "$0")/utils.sh"
 
-CONFIG_FILE=${1:-"config-server.sh"}
 
+# Check the config requirements
+CONFIG_FILE=${1:-"config-server.sh"}
 load_config_and_check -c "$CONFIG_FILE" -vr PYTHON_VERSION VENV_NAME
 
 
-# Version of Python
-PYTHON_VERSION=3.12
-VENV_NAME=venv
+
+# Create .log file
+mkdir -p "$HOME/tmp"
+LOG_FILE="$HOME/tmp/setup-python.log"
+> "$LOG_FILE"
 
 
-########################################
-# Configuration
-########################################
 
 
-########################################
-# Dependency reconciliation
-########################################
+
+
+# Install PYTHON
 
 INSTALL_LIST=()
 
 # Python interpreter
 if ! command -v python${PYTHON_VERSION} >/dev/null 2>&1; then
     INSTALL_LIST+=("python${PYTHON_VERSION}")
+    echo "📦 python${PYTHON_VERSION} needs to be installed"
+else
+    echo "✅ python${PYTHON_VERSION} is already installed"
 fi
 
 # venv
 if ! dpkg-query -W -f='${Status}' python${PYTHON_VERSION}-venv 2>/dev/null | grep -q "ok installed"; then
     INSTALL_LIST+=("python${PYTHON_VERSION}-venv")
+    echo "📦 python${PYTHON_VERSION}-venv needs to be installed"
+else
+    echo "✅ python${PYTHON_VERSION}-venv is already installed"
 fi
 
 # dev headers
 if ! dpkg-query -W -f='${Status}' python${PYTHON_VERSION}-dev 2>/dev/null | grep -q "ok installed"; then
     INSTALL_LIST+=("python${PYTHON_VERSION}-dev")
+    echo "📦 python${PYTHON_VERSION}-dev needs to be installed"
+else
+    echo "✅ python${PYTHON_VERSION}-dev is already installed"
 fi
 
 # pip
 if ! command -v pip3 >/dev/null 2>&1; then
     INSTALL_LIST+=("python3-pip")
+    echo "📦 python3-pip needs to be installed"
+else
+    echo "✅ python3-pip is already installed"
 fi
+
+
 
 
 # Install missing packages 
 if [[ ${#INSTALL_LIST[@]} -gt 0 ]]; then
     echo "🔧 Reconciling runtime dependencies..."
-    sudo apt update
-    sudo apt install -y "${INSTALL_LIST[@]}"
+
+    sudo apt update >>"$LOG_FILE" 2>&1 || {
+        echo "❌ apt update failed"
+        exit 1
+    }
+
+    sudo apt install -y "${INSTALL_LIST[@]}" >>"$LOG_FILE" 2>&1 || {
+        echo "❌ apt install failed"
+        exit 1
+    }
 else
-    echo "✅ Runtime environment already converged"
+    echo "✅ Runtime environment is already installed"
 fi
 
 
+
+
+
+
+
+
+
+# Test the environment
+
 echo "🧠 Verifying Python runtime..."
-
-python${PY_VERSION} - << EOF
+python3 - << EOF
 import sys
-
 print("Python runtime OK")
 print("Version:", sys.version)
 EOF
-
 echo "✅ Guardian check completed"
 
 
@@ -72,20 +100,41 @@ echo "✅ Guardian check completed"
 
 
 
-# if [ -d "~/$VENV_NAME" ]; then
-#     echo "Removing existing virtual environment..."
-#     rm -rf $VENV_NAME
-# fi
 
-# echo "Creating virtual environment..."
-# python$PYTHON_VERSION -m venv ~/$VENV_NAME
 
-# source ~/$VENV_NAME/bin/activate
 
-# echo "Upgrading pip..."
-# pip install --upgrade pip
 
-# echo "Installing packages from requirements.txt..."
-# pip install -r requirements.txt
+# Create the venv and pip install requirements.txt
 
-# echo "✅ Environment setup complete! To activate later: source ~/$VENV_NAME/bin/activate"
+VENV_PATH="$HOME/$VENV_NAME"
+
+# Remove old venv if exists
+if [ -d "$VENV_PATH" ]; then
+    if [[ "$VENV_PATH" == "$HOME/"* ]]; then
+        echo "Removing existing virtual environment..."
+        rm -rf "$VENV_PATH"
+    fi
+fi
+
+echo "Creating virtual environment..."
+python3 -m venv "$VENV_PATH"
+
+# Activate environment
+source "$VENV_PATH/bin/activate"
+
+echo "Upgrading pip..."
+if ! pip install --upgrade pip >>"$LOG_FILE" 2>&1; then
+    echo "❌ Pip upgrade failed"
+    exit 1
+fi
+
+if [[ ! -f "$PWD/requirements.txt" ]]; then
+    echo "⚠️ requirements.txt missing — skipping dependency installation"
+else
+    pip install -r "$PWD/requirements.txt"
+fi
+
+echo "✅ Environment setup complete! To activate later:"
+echo "source $VENV_PATH/bin/activate"
+
+

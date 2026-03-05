@@ -50,5 +50,12 @@ Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```conf
 
 
 
+### setup-nginx.sh
+### setup-netdata.sh
+### setup-python.sh
+### setup-fastapi.sh
+### setup-https.sh
+### setup-website.sh
+
 ## Troubleshooting
 If you face problems, have recommandations, or just want to discuss, you can contact me via jelforzli.webapp@gmail.com ;) !
