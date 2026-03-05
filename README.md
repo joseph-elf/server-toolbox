@@ -11,9 +11,9 @@ Simply git clone this repository.
 ``` PATH```
 and to make all bash command executable with
 ```chmod +x repo/*.sh```.
-You can now run the following bash commands :
+You can now run the following bash commands...
 
-
+## Features
 ### utils.sh
 This contain several utilitary function to open and checks configs:
 - ``` print_variable name```
