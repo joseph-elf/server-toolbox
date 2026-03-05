@@ -2,7 +2,6 @@
 set -e
 set -o pipefail
 
-
 source "$(dirname "$0")/utils.sh"
 
 
@@ -28,3 +27,17 @@ check_variable -v GIT_HUB_repos
 echo "✅ Opening $CONFIG_FILE is done."
 
 
+
+if [[ -n "${GIT_HUB_repos:-}" ]]; then
+    if declare -p GIT_HUB_repos 2>/dev/null | grep -q 'declare \-a'; then
+        # Variable is an array
+        for repo in "${GIT_HUB_repos[@]}"; do
+            echo "yoooo $repo"
+        done
+    else
+        # Variable exists but is not an array (treat as single value)
+        echo "yoooo $GIT_HUB_repos"
+    fi
+else
+    echo "No repositories defined."
+fi

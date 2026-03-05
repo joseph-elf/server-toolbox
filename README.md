@@ -15,7 +15,9 @@ load a config file containing variable definition and check the list of variable
     - ```IP HOST ...``` : list of variables to check
 
 ### init-server.sh
-
+- ```init-server.sh config.sh```
+Reads ```IP```, ```USERNAME```, ```SSH_KEY```, ```GIT_HUB_servertoolbox``` and ```GIT_HUB_repos``` from ```config.sh``` or ```config-server.sh``` by default. Then connects by ```ssh``` to the server and run some initialisation commands:
+    - dji
 ### connect-server.sh
 - ```connect-server.sh config.sh```
-Reading ```IP``` ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```config-server.sh``` by default, it connects by ```ssh``` to the server.
+Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```config-server.sh``` by default, and connects by ```ssh``` to the server.

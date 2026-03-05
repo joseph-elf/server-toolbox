@@ -1,64 +1,16 @@
-#!/bin/bash
-
-GIT_HUB_EC2_connect=https://github.com/joseph-elf/server-toolbox.git
-
-
-
-REMOTE_COMMANDS="echo '✅ Connection to the EC2 instance is succesfull'
-    echo
-
-    git clone $GIT_HUB_EC2_connect;
-
-    grep -qxF 'export PATH=\"\$HOME/EC2_connect:\$PATH\"' ~/.bashrc || \
-    echo 'export PATH=\"\$HOME/EC2_connect:\$PATH\"' >> ~/.bashrc
-
-    source ~/.bashrc;
-    echo
-    "
-
-
-if [[ -z "$GIT_HUB_repo_of_the_project" ]]; then
-    echo "⚠️ Git-Hub repo of the project is not defined, dont forget to clone it !"
-    REMOTE_COMMANDS="$REMOTE_COMMANDS
-    echo '⚠️ Git-Hub repo of the project is not defined, dont forget to clone it !'
-    "
-else 
-    echo "and clone "$GIT_HUB_repo_of_the_project
-    REMOTE_COMMANDS="$REMOTE_COMMANDS
-    git clone $GIT_HUB_repo_of_the_project;
-    "
-
-fi
-
-REMOTE_COMMANDS="$REMOTE_COMMANDS
-    echo
-    echo '#################################################################'
-    echo
-    "
-
-echo 
-
-ssh -i $SSH_FILE -o StrictHostKeyChecking=no -t "$USERNAME@$IP" "$REMOTE_COMMANDS exec bash"
-
-
-
-
-
-
-
-
 #!/usr/bin/env bash
 
 set -e
 set -o pipefail
 source "$(dirname "$0")/utils.sh"
 
-GIT_HUB_servertoolbox=https://github.com/joseph-elf/server-toolbox.git
-
 CONFIG_FILE=${1:-"config-server.sh"}
 
 
-load_config_and_check -c "$CONFIG_FILE" -vr IP USERNAME SSH_KEY
+load_config_and_check -c "$CONFIG_FILE" -vr IP USERNAME SSH_KEY GIT_HUB_servertoolbox
+load_config_and_check -c "$CONFIG_FILE" -v GIT_HUB_repos
+
+
 
 REMOTE_COMMANDS="
 run-parts /etc/update-motd.d/
@@ -67,16 +19,56 @@ echo '###############################################'
 echo '✅ Connection to the EC2 instance is succesfull'
 echo '###############################################'
 echo 
-
+echo '#################################################'
+echo '🚀 Download SERVER-TOOLBOX and make it executable'
 git clone $GIT_HUB_servertoolbox;
-
+echo -e 'Add the server-toolbox repository to the PATH and\nmake .sh executable.'
 grep -qxF 'export PATH=\"\$HOME/server-toolbox:\$PATH\"' ~/.bashrc || \
 echo 'export PATH=\"\$HOME/server-toolbox:\$PATH\"' >> ~/.bashrc
 source ~/.bashrc;
 chmod +x \$HOME/server-toolbox/*.sh
+echo '#################################################'
 echo
+"
+
+GIT_COMMANDS=""
+if [[ -n "${GIT_HUB_repos:-}" ]]; then
+    if declare -p GIT_HUB_repos 2>/dev/null | grep -q 'declare \-a'; then
+        # Variable is an array
+        for repo in "${GIT_HUB_repos[@]}"; do
+            GIT_COMMANDS+="
+            echo
+            echo '##########################################'
+            echo '🚀 Download $repo'
+            git clone $repo
+            echo '##########################################'
+            "
+        done
+    else
+        # Variable exists but is not an array (treat as single value)
+        GIT_COMMANDS+="
+            echo
+            echo '##########################################'
+            echo '🚀 Download $GIT_HUB_repos'
+            git clone $GIT_HUB_repos
+            echo '##########################################'
+            "
+    fi
+else
+    GIT_COMMANDS+="
+            echo
+            echo '##########################################'
+            echo '⚠️ No repositery to download'
+            echo '##########################################'
+            "
+fi
+
+REMOTE_COMMANDS+=$GIT_COMMANDS
+REMOTE_COMMANDS+="
 exec bash
 "
+
+
 
 ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -t "$USERNAME@$IP" "$REMOTE_COMMANDS"
 
