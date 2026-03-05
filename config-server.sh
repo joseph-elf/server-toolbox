@@ -10,7 +10,6 @@ IP=16.171.165.35
 # SSH key file
 SSH_KEY=~/.ssh/aws-rene.pem
 
-
 #Git-Hub repository of this project
 GIT_HUB_servertoolbox=https://github.com/joseph-elf/server-toolbox.git
 

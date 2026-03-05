@@ -17,7 +17,6 @@ echo '#################################################'
 echo "🚀 Send $CONFIG_FILE to the server"
 
 scp -i "$SSH_KEY" \
-    -o StrictHostKeyChecking=no \
     -C \
     -q \
     $CONFIG_FILE \
@@ -86,5 +85,7 @@ REMOTE_COMMANDS+="
 exec bash
 "
 
-ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -t "$USERNAME@$IP" "$REMOTE_COMMANDS"
+ssh -i "$SSH_KEY"\
+    -t "$USERNAME@$IP"\
+     "$REMOTE_COMMANDS"
 

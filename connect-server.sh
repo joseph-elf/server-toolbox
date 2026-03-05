@@ -15,8 +15,11 @@ echo '###############################################'
 echo '✅ Connection to the EC2 instance is succesfull'
 echo '###############################################'
 echo 
+echo 'Run ssh -i $SSH_KEY -t $USERNAME@$IP if you want to connect.'
 exec bash
 "
 
-ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -t "$USERNAME@$IP" "$REMOTE_COMMANDS"
+ssh -i "$SSH_KEY"\
+    -t "$USERNAME@$IP"\
+    "$REMOTE_COMMANDS"
 

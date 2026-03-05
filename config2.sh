@@ -16,8 +16,6 @@ GIT_HUB_repos=(https://github.com/joseph-elf/Rene.git
 https://github.com/joseph-elf/Rene.git
 )
 
-GIT_HUB_repos2=()
-
 
 
 
