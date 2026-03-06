@@ -63,7 +63,7 @@ fi
 if [[ ${#INSTALL_LIST[@]} -gt 0 ]]; then
     echo "🔧 Reconciling runtime dependencies..."
     
-    update_apt -v -f $LOG_FILE 100
+    update_apt -v -f $LOG_FILE 86400
 
     echo "⬇️ Install missing dependencies"
     echo "Running: sudo apt install -y ${INSTALL_LIST[@]}" >> "$LOG_FILE"

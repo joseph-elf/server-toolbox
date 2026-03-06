@@ -3,21 +3,12 @@
 set -e
 set -o pipefail
 
+# Create .log file
+LOG_FILE="$HOME/tmp/setup-netdata.log"
+mkdir -p "$(dirname $LOG)" && > "$LOG_FILE"
 
-STAMP="/var/lib/apt/periodic/update-success-stamp"
-
-if [ ! -f "$STAMP" ] || [ $(( $(date +%s) - $(stat -c %Y "$STAMP") )) -gt 86400 ]; then
-    sudo apt update
-    
-    echo "Running: sudo apt update" >> "$LOG_FILE"
-    sudo apt update >>"$LOG_FILE" 2>&1 || {
-        echo "❌ apt update failed"
-        exit 1
-    }
-
-else
-    echo "APT update was run within the last 24h."
-fi
+update_apt -v -f $LOG_FILE 86400
+echo "Install netdata"
 
 
 
