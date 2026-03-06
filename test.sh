@@ -30,7 +30,6 @@ check_variable -v GIT_HUB_repos
 
 
 
-
 if [[ -n "${GIT_HUB_repos:-}" ]]; then
     if declare -p GIT_HUB_repos 2>/dev/null | grep -q 'declare \-a'; then
         # Variable is an array
@@ -44,3 +43,11 @@ if [[ -n "${GIT_HUB_repos:-}" ]]; then
 else
     echo "No repositories defined."
 fi
+
+
+
+
+
+update_apt
+
+update_apt -v -f $HOME/apt.log 100
