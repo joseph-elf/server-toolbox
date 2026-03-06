@@ -55,6 +55,9 @@ Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```conf
 Add the current directory to the ```PATH```, create  ```TOOLBOX_FOLD``` variable inside ```.zshrc```, ```.bashrc``` or ```.profile``` and make all ```.sh``` executable. 
 WARNING : It has to be executed from the toolbox directory !
 
+### update-toolbox.sh
+- ```update-toolbox.sh``` git pull and install new version.
+
 ### setup-python.sh
 - ```setup-python.sh config.sh```
 
