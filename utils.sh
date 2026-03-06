@@ -152,3 +152,70 @@ load_config_and_check() {
         check_variable "$flags" "$v"
     done
 }
+
+
+
+
+
+
+
+
+update_apt() {
+
+  local OPTIND=1
+  local opt
+
+  local VERBOSE=0
+  local LOG="/tmp/apt_update.log"
+  local TIME=86400
+  local APT_STAMP="/var/lib/apt/periodic/update-success-stamp"
+
+  # ---- Parse flags ----
+  while getopts "vf:" opt; do
+      case "$opt" in
+          v) VERBOSE=1 ;;
+          f) LOG="$OPTARG" ;;
+          *)
+              echo "Usage: update_apt [-v] [-f LOGFILE] [TIME_SECONDS]"
+              return 1
+              ;;
+      esac
+  done
+
+  shift $((OPTIND - 1))
+
+  # ---- Optional TIME argument ----
+  if [[ -n "$1" ]]; then
+      TIME="$1"
+  fi
+
+  local now stamp_age need_update
+
+  if [[ ! -f "$APT_STAMP" ]]; then
+      need_update=1
+      [[ $VERBOSE -eq 1 ]] && echo "APT stamp not found → update required"
+  else
+      now=$(date +%s)
+      stamp_age=$(( now - $(stat -c %Y "$APT_STAMP") ))
+
+      if (( stamp_age > TIME )); then
+          need_update=1
+          [[ $VERBOSE -eq 1 ]] && echo "APT cache older than $TIME seconds → updating"
+      else
+          need_update=0
+          [[ $VERBOSE -eq 1 ]] && echo "APT cache still fresh → skipping"
+      fi
+  fi
+
+  if [[ "$need_update" -eq 1 ]]; then
+      [[ $VERBOSE -eq 1 ]] && echo "Running apt update..."
+
+      echo "Running: sudo apt update" >> "$LOG"
+      if ! sudo apt update &>>"$LOG"; then
+          echo "❌ apt update failed"
+          return 1
+      fi
+
+      [[ $VERBOSE -eq 1 ]] && echo "APT update completed"
+  fi
+}
