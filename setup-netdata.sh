@@ -5,7 +5,7 @@ set -o pipefail
 
 # Create .log file
 LOG_FILE="$HOME/tmp/setup-netdata.log"
-mkdir -p "$(dirname $LOG)" && > "$LOG_FILE"
+mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
 
 update_apt -v -f $LOG_FILE 86400
 echo "Install netdata"
