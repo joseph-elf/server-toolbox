@@ -63,15 +63,15 @@ fi
 if [[ ${#INSTALL_LIST[@]} -gt 0 ]]; then
     echo "🔧 Reconciling runtime dependencies..."
     
-    echo "Running: sudo apt update" >> "$LOG_FILE"
-
     update_apt -v -f $LOG_FILE 100
 
+    echo "⬇️ Install missing dependencies"
     echo "Running: sudo apt install -y ${INSTALL_LIST[@]}" >> "$LOG_FILE"
     sudo apt install -y "${INSTALL_LIST[@]}" >>"$LOG_FILE" 2>&1 || {
         echo "❌ apt install failed"
         exit 1
     }
+    echo "✅ Dependencies installed."
 else
     echo "✅ Runtime environment is already installed"
 fi
@@ -110,12 +110,12 @@ VENV_PATH="$HOME/$VENV_NAME"
 # Remove old venv if exists
 if [ -d "$VENV_PATH" ]; then
     if [[ "$VENV_PATH" == "$HOME/"* ]]; then
-        echo "Removing existing virtual environment..."
+        echo "🗑️ Removing existing virtual environment..."
         rm -rf "$VENV_PATH"
     fi
 fi
 
-echo "Creating virtual environment..."
+echo "🆕 Creating virtual environment..."
 python3 -m venv "$VENV_PATH"
 
 # Activate environment

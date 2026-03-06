@@ -193,31 +193,31 @@ update_apt() {
 
   if [[ ! -f "$APT_STAMP" ]]; then
       need_update=1
-      [[ $VERBOSE -eq 1 ]] && echo "APT stamp not found → update required"
+      [[ $VERBOSE -eq 1 ]] && echo "🔍 apt stamp not found → update required"
   else
       now=$(date +%s)
       stamp_age=$(( now - $(stat -c %Y "$APT_STAMP") ))
 
       if (( stamp_age > TIME )); then
           need_update=1
-          [[ $VERBOSE -eq 1 ]] && echo "APT cache older than $TIME seconds → updating"
+          [[ $VERBOSE -eq 1 ]] && echo "🕐 apt cache older than $TIME seconds → updating"
       else
           need_update=0
-          [[ $VERBOSE -eq 1 ]] && echo "APT cache still fresh → skipping"
+          [[ $VERBOSE -eq 1 ]] && echo "✨ apt cache still fresh → skipping"
       fi
   fi
 
   if [[ "$need_update" -eq 1 ]]; then
-      [[ $VERBOSE -eq 1 ]] && echo "Running apt update..."
+      [[ $VERBOSE -eq 1 ]] && echo "🔄 Running apt update..."
 
       mkdir -p "$(dirname $LOG)" && touch $LOG
-      
+
       echo "Running: sudo apt update" >> "$LOG"
       if ! sudo apt update >>"$LOG" 2>&1; then
           echo "❌ apt update failed"
           return 1
       fi
 
-      [[ $VERBOSE -eq 1 ]] && echo "APT update completed"
+      [[ $VERBOSE -eq 1 ]] && echo "✅ apt update completed"
   fi
 }
