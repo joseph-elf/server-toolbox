@@ -211,7 +211,7 @@ update_apt() {
       [[ $VERBOSE -eq 1 ]] && echo "Running apt update..."
 
       echo "Running: sudo apt update" >> "$LOG"
-      if ! sudo apt update &>>"$LOG"; then
+      if ! sudo apt update >>"$LOG" 2>&1; then
           echo "❌ apt update failed"
           return 1
       fi
