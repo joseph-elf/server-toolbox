@@ -11,6 +11,8 @@ Simply git clone this repository.
 ``` PATH```
 and to make all bash command executable with
 ```chmod +x repo/*.sh```.
+OR
+run ```install-toolbox.sh``` FROM THE TOOLBOX DIRECTORY.
 You can now run the following bash commands...
 
 ## Features
@@ -48,14 +50,21 @@ Then connects by ```ssh``` to the server and run some initialisation commands:
 
 Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```config-server.sh``` by default, and connects by ```ssh``` to the server.
 
+### install-toolbox.sh
+- ```install-toolbox.sh```
+Add the current directory to the ```PATH```, create  ```TOOLBOX_FOLD``` variable inside ```.zshrc```, ```.bashrc``` or ```.profile``` and make all ```.sh``` executable. 
+WARNING : It has to be executed from the toolbox directory !
+
+### setup-python.sh
+- ```setup-python.sh config.sh```
+
+Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```config-server.sh``` by default, and connects by ```ssh``` to the server.
 
 
 ### setup-nginx.sh
 ### setup-netdata.sh
-### setup-python.sh
 ### setup-fastapi.sh
 ### setup-https.sh
 ### setup-website.sh
-
 ## Troubleshooting
 If you face problems, have recommandations, or just want to discuss, you can contact me via jelforzli.webapp@gmail.com ;) !

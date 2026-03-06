@@ -23,12 +23,6 @@ grep -qxF "export TOOLBOX_FOLD=\"$CURRENT_FOLDER\"" $HOME/$RC_FILE || \
 echo "export TOOLBOX_FOLD=\"$CURRENT_FOLDER\"" >> $HOME/$RC_FILE
 source $HOME/$RC_FILE;
 
-# FOR A LINUX SERVER
-# grep -qxF "export PATH=\"$CURRENT_FOLDER:\$PATH\"" $HOME/.bashrc || \
-# echo "export PATH=\"$CURRENT_FOLDER:\$PATH\"" >> $HOME/.bashrc
-# grep -qxF "export TOOLBOX_FOLD=\"$CURRENT_FOLDER\"" $HOME/.bashrc || \
-# echo "export TOOLBOX_FOLD=\"$CURRENT_FOLDER\"" >> $HOME/.bashrc
-# source ~/.bashrc;
 
 chmod +x $CURRENT_FOLDER/*.sh
 

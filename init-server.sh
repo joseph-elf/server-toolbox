@@ -38,9 +38,14 @@ echo '###############################################'
 echo '✅ Connection to the EC2 instance is succesfull'
 echo '###############################################'
 echo 
+echo '🔌 If you want to connect, run :'
+echo 'ssh -i $SSH_KEY -t $USERNAME@$IP'
+echo
 echo '#################################################'
-echo '🚀 Download SERVER-TOOLBOX and make it executable'
+echo '🚀 Download SERVER-TOOLBOX'
 git clone $GIT_HUB_servertoolbox;
+echo 'and install it (path variable)'
+bash server-toolbox/install-toolbox.sh
 echo '#################################################'
 echo
 "

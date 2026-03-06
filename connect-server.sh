@@ -20,7 +20,8 @@ echo '###############################################'
 echo '✅ Connection to the EC2 instance is succesfull'
 echo '###############################################'
 echo 
-echo 'Run ssh -i $SSH_KEY -t $USERNAME@$IP if you want to connect.'
+echo '🔌 If you want to connect, run :'
+echo 'ssh -i $SSH_KEY -t $USERNAME@$IP'
 exec bash
 "
 
