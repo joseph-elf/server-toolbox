@@ -58,11 +58,22 @@ WARNING : It has to be executed from the toolbox directory !
 ### setup-python.sh
 - ```setup-python.sh config.sh```
 
-Reads ```IP```, ```USERNAME``` and ```SSH_KEY``` from ```config.sh``` or ```config-server.sh``` by default, and connects by ```ssh``` to the server.
+Reads ```PYTHON_VERSION``` and ```VENV_NAME``` from ```config.sh``` or ```config-server.sh``` by default.
+Check if ```python```, ```python-venv```, ```python-dev```, ```python-pip``` is installed and if not install it (with a ```sudo apt install```).
+After testing the environment, it create a venv in ```$HOME/&VENV_NAME``` (delete the previous one) and pip upgrade it. If you execute this command in a folder where you have a ```requirements.txt```, it pip install the packages listed in it.
+You can activate the venv with ```source $VENV_PATH/bin/activate```
+For more readability, most of the logs are redirected to the ```~/tmp/setup-python.log``` file.
 
+### setup-netdata.sh
+- ```setup-netdata.sh```
+Install the netdata app, start and enable it. And update the existing nginx reverse proxy or create it (see setup-nginx.sh).
+
+GENERALISE TO A MONITOR WEBSITE WHERE I CSN SEE NETDATA, AND DECIDE TO KILL PROCESSES OR RELOAD OR LAUCH SOME SMALL PYTHON SCRIPT, MAYBE A PORTABLE SSH ?
 
 ### setup-nginx.sh
-### setup-netdata.sh
+- ```setup-nginx.sh```
+
+
 ### setup-fastapi.sh
 ### setup-https.sh
 ### setup-website.sh

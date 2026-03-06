@@ -23,3 +23,51 @@ grep -qxF 'export TOOLBOX_FOLD=\"\$HOME/server-toolbox\"' ~/.bashrc || \
 echo 'export TOOLBOX_FOLD=\"\$HOME/server-toolbox\"' >> ~/.bashrc
 source ~/.bashrc;
 chmod +x \$HOME/server-toolbox/*.sh
+
+
+
+
+
+
+TO CLEAN A BIT PROCESSES
+systemctl service wrappers
+or
+scripted process tracking
+
+
+
+toolbox run cpp task1
+toolbox run python simulate_heat_transfer
+toolbox stop task1
+toolbox list tasks
+
+toolbox run cpp task1
+toolbox run python simulate_heat_transfer
+toolbox stop task1
+toolbox list tasks
+
+toolbox kill research_jobs
+toolbox status jobs
+
+limit cpu usage for each use
+CPUQuota=50%
+MemoryMax=2G
+
+
+
+1. Compute launcher
+Responsible for:
+Starting scientific jobs
+Applying resource limits
+Logging PID
+2. Process monitor
+Tracks:
+Running experiments
+Memory usage
+CPU load
+You already have Netdata which helps.
+3. Cleanup daemon (very important)
+Automatically kills:
+Stalled jobs
+Zombie workers
+Forgotten simulations
