@@ -3,6 +3,11 @@
 set -e
 set -o pipefail
 
+TOOLBOX_FOLD="${TOOLBOX_FOLD:-$( [ -d "$HOME/server-toolbox" ] && echo "$HOME/server-toolbox" || pwd )}"
+source "$TOOLBOX_FOLD/utils.sh"
+
+
+
 # Create .log file
 LOG_FILE="$HOME/tmp/setup-nginx.log"
 mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
