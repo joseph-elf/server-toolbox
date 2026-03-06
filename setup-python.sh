@@ -21,7 +21,6 @@ LOG_FILE="$HOME/tmp/setup-python.log"
 
 
 
-
 # Install PYTHON
 
 INSTALL_LIST=()
@@ -65,10 +64,8 @@ if [[ ${#INSTALL_LIST[@]} -gt 0 ]]; then
     echo "🔧 Reconciling runtime dependencies..."
     
     echo "Running: sudo apt update" >> "$LOG_FILE"
-    sudo apt update >>"$LOG_FILE" 2>&1 || {
-        echo "❌ apt update failed"
-        exit 1
-    }
+
+    update_apt -v -f $LOG_FILE 100
 
     echo "Running: sudo apt install -y ${INSTALL_LIST[@]}" >> "$LOG_FILE"
     sudo apt install -y "${INSTALL_LIST[@]}" >>"$LOG_FILE" 2>&1 || {

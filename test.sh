@@ -45,9 +45,3 @@ else
 fi
 
 
-
-
-
-update_apt
-
-update_apt -v -f $HOME/apt.log 100

@@ -4,6 +4,23 @@ set -e
 set -o pipefail
 
 
+STAMP="/var/lib/apt/periodic/update-success-stamp"
+
+if [ ! -f "$STAMP" ] || [ $(( $(date +%s) - $(stat -c %Y "$STAMP") )) -gt 86400 ]; then
+    sudo apt update
+    
+    echo "Running: sudo apt update" >> "$LOG_FILE"
+    sudo apt update >>"$LOG_FILE" 2>&1 || {
+        echo "❌ apt update failed"
+        exit 1
+    }
+
+else
+    echo "APT update was run within the last 24h."
+fi
+
+
+
 #install htop (monitor in terminal) and netdata (GUI online monitor)
 sudo apt install htop
 

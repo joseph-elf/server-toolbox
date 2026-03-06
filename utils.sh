@@ -210,6 +210,8 @@ update_apt() {
   if [[ "$need_update" -eq 1 ]]; then
       [[ $VERBOSE -eq 1 ]] && echo "Running apt update..."
 
+      mkdir -p "$(dirname $LOG)" && touch $LOG
+      
       echo "Running: sudo apt update" >> "$LOG"
       if ! sudo apt update >>"$LOG" 2>&1; then
           echo "❌ apt update failed"
