@@ -12,7 +12,7 @@ echo "create_apache_user"
 create_apache_user
 
 echo "add_user"
-add-user
+admin-utils.sh add-user
 
 
 
