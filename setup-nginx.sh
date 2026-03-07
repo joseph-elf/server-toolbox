@@ -17,18 +17,6 @@ echo "Install nginx"
 
 sudo apt install nginx -y
 
-sudo apt install apache2-utils
-
-read -p "Do you want to create an account for later nginx authentification ? [y/n]: " confirm
-
-if [[ "$confirm" =~ ^[Yy]$ ]]; then
-    read -p "Username : " username
-
-    sudo htpasswd -c /etc/nginx/.htpasswd $username
-
-else
-    echo "Cancelled."
-fi
 
 
 

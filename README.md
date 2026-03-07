@@ -32,7 +32,9 @@ load a config file containing variable definition and check the list of variable
     - ```-vr``` : flag to pass to ```check_variable```
     - ```IP HOST ...``` : list of variables to check
 
-
+### admin-utils.sh
+- ```check_install_apache```
+- ``` ```
 
 ### init-server.sh
 - ```init-server.sh config.sh```

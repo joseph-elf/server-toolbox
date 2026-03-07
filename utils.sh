@@ -4,7 +4,6 @@
 if [[ "${UTILS_LOADED:-0}" -eq 1 ]]; then
     return
 fi
-
 UTILS_LOADED=1
 
 
