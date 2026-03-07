@@ -33,8 +33,11 @@ load a config file containing variable definition and check the list of variable
     - ```IP HOST ...``` : list of variables to check
 
 ### admin-utils.sh
-- ```check_install_apache```
-- ``` ```
+- ```check_install_apache log```
+- ```add_apache_user log```
+- ```remove_apache_user```
+- ```list_users```
+- ```main```
 
 ### init-server.sh
 - ```init-server.sh config.sh```
@@ -69,14 +72,16 @@ After testing the environment, it create a venv in ```$HOME/&VENV_NAME``` (delet
 You can activate the venv with ```source $VENV_PATH/bin/activate```
 For more readability, most of the logs are redirected to the ```~/tmp/setup-python.log``` file.
 
+### setup-nginx.sh
+- ```setup-nginx.sh```
+
 ### setup-netdata.sh
 - ```setup-netdata.sh```
 Install the netdata app, start and enable it. And update the existing nginx reverse proxy or create it (see setup-nginx.sh).
 
 GENERALISE TO A MONITOR WEBSITE WHERE I CSN SEE NETDATA, AND DECIDE TO KILL PROCESSES OR RELOAD OR LAUCH SOME SMALL PYTHON SCRIPT, MAYBE A PORTABLE SSH ?
 
-### setup-nginx.sh
-- ```setup-nginx.sh```
+
 
 
 ### setup-fastapi.sh
