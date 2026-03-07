@@ -220,3 +220,16 @@ update_apt() {
       [[ $VERBOSE -eq 1 ]] && echo "✅ apt update completed"
   fi
 }
+
+
+
+confirm() {
+    while true; do
+        read -rp "$1 [y/n]: " answer
+        case "$answer" in
+            [Yy]|[Yy][Ee][Ss]) return 0 ;;
+            [Nn]|[Nn][Oo]) return 1 ;;
+            *) echo "Please answer yes or no." ;;
+        esac
+    done
+}

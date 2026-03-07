@@ -10,23 +10,16 @@ source "$TOOLBOX_FOLD/utils.sh"
 
 
 # Create .log file
-LOG_FILE="$HOME/tmp/setup-apache.log"
-mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
+LOG_FILE_local="$HOME/tmp/setup-apache.log"
+mkdir -p "$(dirname $LOG_FILE_local)" && > "$LOG_FILE_local"
 
 
 HTPASSWD_FILE="/etc/nginx/.htpasswd"
 
 
 
-
-
-
-
-
-
-
 check_install_apache(){
-
+    local LOG_FILE="${1:-$LOG_FILE_local}"
     if ! command -v htpasswd &> /dev/null; then
         echo "apache2-utils not installed, installing..."
 
@@ -45,8 +38,9 @@ check_install_apache(){
 
 
 create_apache_user(){
-
-    check_install_apache
+    local LOG_FILE="${1:-$LOG_FILE_local}"
+    
+    check_install_apache $LOG_FILE
 
     read -p "Username : " username
 
