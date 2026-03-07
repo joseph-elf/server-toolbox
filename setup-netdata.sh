@@ -128,7 +128,7 @@ EOF
 
 
 
-sudo printf "%s\n" "$NGINX_CONFIG" > "$CONF_FILE"
+printf "%s\n" "$NGINX_CONFIG" | sudo tee /etc/nginx/sites-available/netdata > /dev/null
 
 sudo ln -sf "$CONF_FILE" /etc/nginx/sites-enabled/netdata
 
