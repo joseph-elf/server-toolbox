@@ -14,7 +14,13 @@ mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
 
 update_apt -v -f $LOG_FILE 86400
 echo "Install nginx"
+
 sudo apt install nginx -y
+
+sudo apt install apache2-utils
+
+sudo htpasswd -c /etc/nginx/.htpasswd admin
+
 
 
 
