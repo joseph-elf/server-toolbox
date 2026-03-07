@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 
 
+
+
+TOOLBOX_FOLD="${TOOLBOX_FOLD:-$( [ -d "$HOME/server-toolbox" ] && echo "$HOME/server-toolbox" || pwd )}"
+echo "The toolbox loaded is located in $TOOLBOX_FOLD."
+
+source "$TOOLBOX_FOLD/admin-utils.sh"
+
+echo "create_apache_user"
+create_apache_user
+
+echo "add_user"
+add-user
+
+
+
 NGINX_CONFIG=""
 
 NGINX_CONFIG+="$(cat <<EOF

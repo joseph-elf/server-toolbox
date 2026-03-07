@@ -90,8 +90,6 @@ list_users() {
 
 
 
-
-
 main() {
     case "$1" in
         add-user)
@@ -101,7 +99,7 @@ main() {
             remove_apache_user
             ;;
         list-users)
-            list_users
+            list_apache_users
             ;;
         *)
             echo "Usage:"
