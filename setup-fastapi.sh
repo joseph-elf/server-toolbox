@@ -62,9 +62,9 @@ After=network.target
 [Service]
 User=ubuntu
 WorkingDirectory=$PWD
-ExecStart=$HOME/$VENV_NAME/bin/gunicorn main:app -c $PWD/config_gunicorn.py
-StandardOutput=append:/var/log/fastapi.log
-StandardError=append:/var/log/fastapi-error.log
+ExecStart=$HOME/$VENV_NAME/bin/gunicorn main:app -c $PWD/config-gunicorn.py
+StandardOutput=append:$FASTAPI_LOG_FILE
+StandardError=append:$FASTAPI_ERROR_FILE
 Restart=always
 RestartSec=10
 
@@ -77,7 +77,9 @@ WantedBy=multi-user.target
 EOF
 )"
 
-printf "%s\n" "$SYSTEMD_CONFIG" | sudo tee /etc/systemd/system/fastapi.service > /dev/null
+printf "%s\n" "$SYSTEMD_CONFIG" | sudo tee "$PWD/fastapi.service" > /dev/null
+
+sudo ln -sf "$PWD/fastapi.service" "/etc/systemd/system/fastapi.service"
 
 
 
