@@ -18,6 +18,7 @@ CONFIG_FILE=${1:-"config-server.sh"}
 load_config_and_check -c "$CONFIG_FILE" -vr VENV_NAME
 
 
+source $HOME/$VENV_NAME/bin/activate
 
 
 if [[ ! -f "$PWD/requirements.txt" ]]; then
@@ -35,10 +36,16 @@ fi
 
 
 
-FASTAPI_LOG_FILE=$HOME/fastapi-log
-sudo mkdir -p $HOME/fastapi-log
-sudo chown ubuntu:ubuntu $FASTAPI_LOG_FILE/fastapi.log
-sudo chown ubuntu:ubuntu $FASTAPI_LOG_FILE/fastapi-error.log
+# Create .log file
+FASTAPI_LOG_FOLD=$HOME/fastapi-log
+FASTAPI_LOG_FILE=$FASTAPI_LOG_FOLD/fastapi.log
+FASTAPI_ERROR_FILE=$FASTAPI_LOG_FOLD/fastapi-error.log
+sudo mkdir -p "$(dirname $FASTAPI_LOG_FILE)" && sudo > "$FASTAPI_LOG_FILE"
+sudo mkdir -p "$(dirname $FASTAPI_ERROR_FILE)" && sudo > "$FASTAPI_ERROR_FILE"
+
+
+sudo chown ubuntu:ubuntu $FASTAPI_LOG_FILE
+sudo chown ubuntu:ubuntu $FASTAPI_ERROR_FILE
 
 
 
