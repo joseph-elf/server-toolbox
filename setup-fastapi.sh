@@ -165,7 +165,7 @@ EOF
 
 printf "%s\n" "$NGINX_CONFIG" | sudo tee /etc/nginx/sites-available/fastapi > /dev/null
 
-sudo ln -sf "$CONF_FILE" /etc/nginx/sites-enabled/fastapi
+sudo ln -sf "$/etc/nginx/sites-available/fastapi" /etc/nginx/sites-enabled/fastapi
 
 sudo nginx -t
 sudo systemctl reload nginx
