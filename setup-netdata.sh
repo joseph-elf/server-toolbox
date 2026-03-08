@@ -94,7 +94,7 @@ EOF
 
 if confirm " Do you want to make NETDATA only accessible to admin ?"; then
     if confirm " Do you want to create a new admin ?"; then
-        create_apache_user $LOG_FILEß
+        create_apache_user $LOG_FILE
     fi
 
 NGINX_CONFIG+="$(cat <<EOF
@@ -122,8 +122,6 @@ NGINX_CONFIG+="$(cat <<EOF
 }
 EOF
 )"
-
-
 
 
 

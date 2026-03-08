@@ -82,10 +82,13 @@ Install the netdata app, start and enable it. And update the existing nginx reve
 GENERALISE TO A MONITOR WEBSITE WHERE I CSN SEE NETDATA, AND DECIDE TO KILL PROCESSES OR RELOAD OR LAUCH SOME SMALL PYTHON SCRIPT, MAYBE A PORTABLE SSH ?
 
 
+### setup-node-website.sh
+- ```setup-node-website.sh```
 
+### setup-html-website.sh
+- ```setup-html-website.sh```
 
 ### setup-fastapi.sh
 ### setup-https.sh
-### setup-website.sh
 ## Troubleshooting
 If you face problems, have recommandations, or just want to discuss, you can contact me via jelforzli.webapp@gmail.com ;) !
