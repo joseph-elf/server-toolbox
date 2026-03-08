@@ -140,8 +140,10 @@ if confirm " Do you want to make the API only accessible to admin ?"; then
 
 NGINX_CONFIG+="$(cat <<EOF
 
+
         auth_basic "Admin Only";
         auth_basic_user_file /etc/nginx/.htpasswd;
+
 
 EOF
 )"
@@ -150,6 +152,7 @@ fi
 
 
 NGINX_CONFIG+="$(cat <<EOF
+
 
         proxy_pass http://127.0.0.1:$FASTAPI_PORT/;
         proxy_set_header Host \$host;

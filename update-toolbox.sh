@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 
-git pull
+git fetch origin
+git reset --hard origin/main
+
 
 install-toolbox.sh
 

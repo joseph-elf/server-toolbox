@@ -98,8 +98,12 @@ if confirm " Do you want to make NETDATA only accessible to admin ?"; then
     fi
 
 NGINX_CONFIG+="$(cat <<EOF
+
+
         auth_basic "Admin Only";
         auth_basic_user_file /etc/nginx/.htpasswd;
+
+
 EOF
 )"
 fi
@@ -107,6 +111,8 @@ fi
 
 
 NGINX_CONFIG+="$(cat <<EOF
+
+
         proxy_pass http://127.0.0.1:$NETDATA_PORT/;
         proxy_set_header Host \$host;
         proxy_set_header X-Forwarded-Host \$host;
