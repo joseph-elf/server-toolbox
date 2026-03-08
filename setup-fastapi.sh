@@ -133,7 +133,7 @@ server {
 EOF
 )"
 
-if confirm " Do you want to make NETDATA only accessible to admin ?"; then
+if confirm " Do you want to make the API only accessible to admin ?"; then
     if confirm " Do you want to create a new admin ?"; then
         create_apache_user $LOG_FILE
     fi
@@ -165,7 +165,7 @@ EOF
 
 printf "%s\n" "$NGINX_CONFIG" | sudo tee /etc/nginx/sites-available/fastapi > /dev/null
 
-sudo ln -sf "$CONF_FILE" /etc/nginx/sites-enabled/netdata
+sudo ln -sf "$CONF_FILE" /etc/nginx/sites-enabled/fastapi
 
 sudo nginx -t
 sudo systemctl reload nginx
