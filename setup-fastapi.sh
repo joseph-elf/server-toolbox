@@ -139,8 +139,10 @@ if confirm " Do you want to make the API only accessible to admin ?"; then
     fi
 
 NGINX_CONFIG+="$(cat <<EOF
+
         auth_basic "Admin Only";
         auth_basic_user_file /etc/nginx/.htpasswd;
+
 EOF
 )"
 fi
@@ -148,6 +150,7 @@ fi
 
 
 NGINX_CONFIG+="$(cat <<EOF
+
         proxy_pass http://127.0.0.1:$FASTAPI_PORT/;
         proxy_set_header Host \$host;
         proxy_set_header X-Forwarded-Host \$host;
@@ -165,7 +168,7 @@ EOF
 
 printf "%s\n" "$NGINX_CONFIG" | sudo tee /etc/nginx/sites-available/fastapi > /dev/null
 
-sudo ln -sf "$/etc/nginx/sites-available/fastapi" /etc/nginx/sites-enabled/fastapi
+sudo ln -sf "/etc/nginx/sites-available/fastapi" "/etc/nginx/sites-enabled/fastapi"
 
 sudo nginx -t
 sudo systemctl reload nginx
