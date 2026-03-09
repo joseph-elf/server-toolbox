@@ -12,6 +12,7 @@ CONFIG_FILE=${1:-"config-server.sh"}
 load_config_and_check -c "$CONFIG_FILE" -vr IP USERNAME SSH_KEY GIT_HUB_servertoolbox
 load_config_and_check -c "$CONFIG_FILE" -v GIT_HUB_repos
 
+ssh-keygen -R $IP
 
 # Send the config file to the root of the server
 echo

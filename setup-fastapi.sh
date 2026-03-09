@@ -18,7 +18,7 @@ mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
 
 # Check the config requirements
 CONFIG_FILE=${1:-"config-server.sh"}
-load_config_and_check -c "$CONFIG_FILE" -vr VENV_NAME
+load_config_and_check -c "$CONFIG_FILE" -vr VENV_NAME USERNAME
 
 
 source $HOME/$VENV_NAME/bin/activate
@@ -51,8 +51,8 @@ sudo touch "$FASTAPI_LOG_FILE"
 sudo touch "$FASTAPI_ERROR_FILE"
 
 
-sudo chown ubuntu:ubuntu $FASTAPI_LOG_FILE
-sudo chown ubuntu:ubuntu $FASTAPI_ERROR_FILE
+sudo chown $USERNAME:$USERNAME $FASTAPI_LOG_FILE
+sudo chown $USERNAME:$USERNAME $FASTAPI_ERROR_FILE
 
 
 
@@ -64,7 +64,7 @@ Description=FastAPI App
 After=network.target
 
 [Service]
-User=ubuntu
+User=$USERNAME
 WorkingDirectory=$PWD
 ExecStart=$HOME/$VENV_NAME/bin/gunicorn main:app -c $PWD/config-gunicorn.py
 ExecReload=/bin/kill -HUP $MAINPID
