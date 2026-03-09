@@ -94,17 +94,6 @@ printf "%s\n" "$SYSTEMD_CONFIG" | sudo tee "$SYSTEMD_FILE" > /dev/null
 sudo ln -sf "$SYSTEMD_FILE" "/etc/systemd/system/fastapi.service"
 
 
-
-
-
-
-
-# printf "%s\n" "$SYSTEMD_CONFIG" | sudo tee "$PWD/fastapi.service" > /dev/null
-
-# sudo ln -sf "$PWD/fastapi.service" "/etc/systemd/system/fastapi.service"
-
-
-
 #reload systemd
 sudo systemctl daemon-reload
 
