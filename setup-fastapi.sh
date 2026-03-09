@@ -10,8 +10,11 @@ source "$TOOLBOX_FOLD/admin-utils.sh"
 
 
 # Create .log file
-LOG_FILE="$HOME/tmp/setup-fastapi.log"
+LOG_FILE="$HOME/ops/server-toolbox-logs/setup-fastapi.log"
 mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
+
+
+
 
 # Check the config requirements
 CONFIG_FILE=${1:-"config-server.sh"}
@@ -37,7 +40,8 @@ fi
 
 
 # Create .log file
-FASTAPI_LOG_FOLD=$HOME/fastapi-log
+
+FASTAPI_LOG_FOLD="$HOME/ops/API-logs"
 FASTAPI_LOG_FILE=$FASTAPI_LOG_FOLD/fastapi.log
 FASTAPI_ERROR_FILE=$FASTAPI_LOG_FOLD/fastapi-error.log
 
@@ -63,8 +67,11 @@ After=network.target
 User=ubuntu
 WorkingDirectory=$PWD
 ExecStart=$HOME/$VENV_NAME/bin/gunicorn main:app -c $PWD/config-gunicorn.py
+ExecReload=/bin/kill -HUP $MAINPID
+
 StandardOutput=append:$FASTAPI_LOG_FILE
 StandardError=append:$FASTAPI_ERROR_FILE
+
 Restart=always
 RestartSec=10
 
@@ -77,9 +84,24 @@ WantedBy=multi-user.target
 EOF
 )"
 
-printf "%s\n" "$SYSTEMD_CONFIG" | sudo tee "$PWD/fastapi.service" > /dev/null
 
-sudo ln -sf "$PWD/fastapi.service" "/etc/systemd/system/fastapi.service"
+
+SYSTEMD_FILE="$HOME/ops/systemd/fastapi.service"
+mkdir -p "$(dirname $SYSTEMD_FILE)" && > "$SYSTEMD_FILE"
+
+printf "%s\n" "$NGINX_CONFIG" | sudo tee "$NGINX_FILE" > /dev/null
+
+sudo ln -sf "$SYSTEMD_FILE" "/etc/systemd/system/fastapi.service"
+
+
+
+
+
+
+
+# printf "%s\n" "$SYSTEMD_CONFIG" | sudo tee "$PWD/fastapi.service" > /dev/null
+
+# sudo ln -sf "$PWD/fastapi.service" "/etc/systemd/system/fastapi.service"
 
 
 
@@ -171,9 +193,17 @@ EOF
 )"
 
 
-printf "%s\n" "$NGINX_CONFIG" | sudo tee /etc/nginx/sites-available/fastapi > /dev/null
 
+NGINX_FILE="$HOME/ops/nginx-sites/fastapi"
+mkdir -p "$(dirname $NGINX_FILE)" && > "$NGINX_FILE"
+
+printf "%s\n" "$NGINX_CONFIG" | sudo tee "$NGINX_FILE" > /dev/null
+
+sudo ln -sf "$NGINX_FILE" "/etc/nginx/sites-available/fastapi"
 sudo ln -sf "/etc/nginx/sites-available/fastapi" "/etc/nginx/sites-enabled/fastapi"
+
+
+
 
 sudo nginx -t
 sudo systemctl reload nginx

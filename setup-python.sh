@@ -13,7 +13,7 @@ load_config_and_check -c "$CONFIG_FILE" -vr PYTHON_VERSION VENV_NAME
 
 
 # Create .log file
-LOG_FILE="$HOME/tmp/setup-python.log"
+LOG_FILE="$HOME/ops/server-toolbox-logs/setup-python.log"
 mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
 
 

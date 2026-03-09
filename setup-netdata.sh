@@ -9,7 +9,7 @@ source "$TOOLBOX_FOLD/utils.sh"
 
 
 # Create .log file
-LOG_FILE="$HOME/tmp/setup-netdata.log"
+LOG_FILE="$HOME/ops/server-toolbox-logs/setup-netdata.log"
 mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
 
 update_apt -v -f $LOG_FILE 86400
@@ -130,11 +130,13 @@ EOF
 )"
 
 
+NGINX_FILE="$HOME/ops/nginx-sites/netdata"
+mkdir -p "$(dirname $NGINX_FILE)" && > "$NGINX_FILE"
 
+printf "%s\n" "$NGINX_CONFIG" | sudo tee "$NGINX_FILE" > /dev/null
 
-printf "%s\n" "$NGINX_CONFIG" | sudo tee /etc/nginx/sites-available/netdata > /dev/null
-
-sudo ln -sf "$CONF_FILE" /etc/nginx/sites-enabled/netdata
+sudo ln -sf "$NGINX_FILE" "/etc/nginx/sites-available/netdata"
+sudo ln -sf "/etc/nginx/sites-available/netdata" "/etc/nginx/sites-enabled/netdata"
 
 sudo nginx -t
 sudo systemctl reload nginx

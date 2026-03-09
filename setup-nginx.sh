@@ -9,7 +9,7 @@ source "$TOOLBOX_FOLD/utils.sh"
 source "$TOOLBOX_FOLD/admin-utils.sh"
 
 # Create .log file
-LOG_FILE="$HOME/tmp/setup-nginx.log"
+LOG_FILE="$HOME/ops/server-toolbox-logs/setup-nginx.log"
 mkdir -p "$(dirname $LOG_FILE)" && > "$LOG_FILE"
 
 
