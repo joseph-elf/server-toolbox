@@ -89,7 +89,7 @@ EOF
 SYSTEMD_FILE="$HOME/ops/systemd/fastapi.service"
 mkdir -p "$(dirname $SYSTEMD_FILE)" && > "$SYSTEMD_FILE"
 
-printf "%s\n" "$NGINX_CONFIG" | sudo tee "$NGINX_FILE" > /dev/null
+printf "%s\n" "$SYSTEMD_CONFIG" | sudo tee "$SYSTEMD_FILE" > /dev/null
 
 sudo ln -sf "$SYSTEMD_FILE" "/etc/systemd/system/fastapi.service"
 
