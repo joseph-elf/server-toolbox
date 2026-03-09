@@ -10,8 +10,9 @@ source "$TOOLBOX_FOLD/utils.sh"
 
 
 # Create .log file
-LOG_FILE_local="$HOME/tmp/setup-apache.log"
+LOG_FILE_local="$HOME/ops/server-toolbox-logs/setup-apache.log"
 mkdir -p "$(dirname $LOG_FILE_local)" && > "$LOG_FILE_local"
+
 
 
 HTPASSWD_FILE="/etc/nginx/.htpasswd"

@@ -71,3 +71,84 @@ Automatically kills:
 Stalled jobs
 Zombie workers
 Forgotten simulations
+
+
+
+
+
+
+
+
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+source ~/.bashrc
+nvm install 20
+nvm use 20
+nvm alias default 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+server {      #lister ipv4:80 #listen ipv6:80
+
+    server_name josephelf.fr www.josephelf.fr;  #catch all
+
+    root /var/www/html; #static files user can access
+    index index.html;   #default file openned
+    
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000/;  # send request to local:8000, api
+        proxy_set_header Host $host;   #give the server domain to the api
+        proxy_set_header X-Real-IP $remote_addr;   #send the user ip to api
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;   
+        proxy_set_header X-Forwarded-Proto $scheme;    #tell the api if its http or https
+    }
+
+    location /netdata/ {
+        proxy_pass http://127.0.0.1:19999/;
+        proxy_set_header Host $host;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_redirect off;
+    }
+
+    location / {    #handle request starting by /
+        try_files $uri /index.html;
+    }
+ 
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/josephelf.fr/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/josephelf.fr/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+WHEN REBOOT
+
+ssh-keygen -R IP
