@@ -51,8 +51,8 @@ sudo touch "$FASTAPI_LOG_FILE"
 sudo touch "$FASTAPI_ERROR_FILE"
 
 
-sudo chown $USERNAME:$USERNAME $FASTAPI_LOG_FILE
-sudo chown $USERNAME:$USERNAME $FASTAPI_ERROR_FILE
+sudo chown root:root $FASTAPI_LOG_FILE
+sudo chown root:root $FASTAPI_ERROR_FILE
 
 
 
@@ -64,7 +64,7 @@ Description=FastAPI App
 After=network.target
 
 [Service]
-User=$USERNAME
+User=root
 WorkingDirectory=$PWD
 ExecStart=$HOME/$VENV_NAME/bin/gunicorn main:app -c $PWD/config-gunicorn.py
 ExecReload=/bin/kill -HUP $MAINPID

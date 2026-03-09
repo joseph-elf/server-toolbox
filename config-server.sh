@@ -2,10 +2,10 @@
 
 
 # USERNAME on the server
-USERNAME=ubuntu
+USERNAME=root
 
 # IP of the server
-IP=16.171.165.35
+IP=89.167.122.101
 
 # SSH key file
 SSH_KEY=~/.ssh/aws-rene.pem
